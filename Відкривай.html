@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>❤️Для Тебе❤️</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      min-height: 100vh;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #ffdde1, #ee9ca7);
+      color: white;
+    }
+
+    .screen {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 25px;
+      transition: opacity 0.8s ease;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    h1 {
+      font-size: clamp(32px, 8vw, 70px);
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.25);
+    }
+
+    p {
+      font-size: clamp(18px, 4vw, 28px);
+      max-width: 700px;
+      line-height: 1.5;
+      text-shadow: 0 3px 12px rgba(0,0,0,0.25);
+    }
+
+    .buttons {
+      margin-top: 35px;
+      display: flex;
+      gap: 25px;
+      align-items: center;
+      justify-content: center;
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      padding: 16px 38px;
+      border-radius: 999px;
+      font-size: 22px;
+      font-weight: 700;
+      transition: 0.25s ease;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    #yesBtn {
+      background: #ff2f6d;
+      color: white;
+    }
+
+    #yesBtn:hover {
+      transform: scale(1.1);
+      background: #ff0f5b;
+    }
+
+    #noBtn {
+      background: white;
+      color: #ff2f6d;
+      position: relative;
+    }
+
+    .heart-wrap {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin-bottom: 35px;
+      animation: appear 1.2s ease forwards;
+    }
+
+    .heart {
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: #ff174f;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+      animation: heartGrow 1.6s ease forwards, heartbeat 1.4s ease-in-out infinite 1.6s;
+      box-shadow: 0 0 45px #ff174f;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 120px;
+      height: 120px;
+      background: #ff174f;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -60px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 60px;
+      top: 0;
+    }
+
+    @keyframes heartGrow {
+      0% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+      }
+      70% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1.25);
+      }
+      100% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+      }
+    }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+      }
+      50% {
+        transform: translate(-50%, -50%) rotate(-45deg) scale(1.15);
+      }
+    }
+
+    @keyframes appear {
+      from {
+        opacity: 0;
+        transform: scale(0.3);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .love-text {
+      animation: textFade 2s ease forwards;
+      z-index: 2;
+    }
+
+    @keyframes textFade {
+      from {
+        opacity: 0;
+        transform: translateY(25px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .secret-btn {
+      margin-top: 30px;
+      padding: 15px 30px;
+      border-radius: 999px;
+      background: white;
+      color: #ff2f6d;
+      font-size: 20px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .secret-btn:hover {
+      transform: scale(1.08);
+      background: #fff0f5;
+    }
+
+    .secret-box {
+      margin-top: 25px;
+      width: min(90vw, 720px);
+      animation: textFade 1s ease;
+    }
+
+    .secret-message {
+      font-size: clamp(18px, 3vw, 25px);
+      margin-bottom: 18px;
+    }
+
+    .floating-heart {
+      position: fixed;
+      bottom: -30px;
+      color: rgba(255,255,255,0.75);
+      font-size: 24px;
+      animation: floatUp 6s linear infinite;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-110vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    #kiss {
+      font-size: 90px;
+      margin-top: 25px;
+      opacity: 0;
+    }
+
+    .kiss-animation {
+      animation: kissFly 2.8s ease forwards;
+    }
+
+    @keyframes kissFly {
+      0% {
+        opacity: 0;
+        transform: scale(0.2);
+      }
+      35% {
+        opacity: 1;
+        transform: scale(1.5);
+      }
+      100% {
+        opacity: 0;
+        transform: translateY(-150px) scale(0.8) rotate(25deg);
+      }
+    }
+
+    .final-text {
+      margin-top: 15px;
+      font-size: clamp(18px, 3vw, 26px);
+      opacity: 0;
+    }
+
+    .final-text.show {
+      animation: textFade 1.5s ease forwards;
+    }
+
+    @media (max-width: 600px) {
+      .buttons {
+        flex-direction: column;
+      }
+
+      button {
+        font-size: 19px;
+        padding: 14px 32px;
+      }
+
+      .heart-wrap {
+        width: 180px;
+        height: 180px;
+      }
+
+      .heart {
+        width: 95px;
+        height: 95px;
+      }
+
+      .heart::before,
+      .heart::after {
+        width: 95px;
+        height: 95px;
+      }
+
+      .heart::before {
+        top: -47px;
+      }
+
+      .heart::after {
+        left: 47px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <section id="startScreen" class="screen">
+    <h1>У мене є одне питання ❤️</h1>
+    <p>Сонечко ти готова побачити дещо миле?</p>
+
+    <div class="buttons">
+      <button id="yesBtn">ТАК</button>
+      <button id="noBtn">НІ</button>
+    </div>
+  </section>
+
+  <section id="loveScreen" class="screen hidden">
+    <div class="heart-wrap">
+      <div class="heart"></div>
+    </div>
+
+    <div class="love-text">
+      <h1>😍Яке ж ти сонечко😍</h1>
+
+      <p>
+        Знаєш, іноді достатньо однієї людини,
+        щоб навіть звичайний день став теплим, світлим і особливим.
+      </p>
+
+      <button id="secretBtn" class="secret-btn">
+        💌Не бійся, натискай💌
+      </button>
+
+      <div id="secretBox" class="secret-box hidden">
+        <p class="secret-message">
+          А тут для тебе ще щось є ✨
+        </p>
+
+        <div id="kiss">💋</div>
+
+        <p id="finalText" class="final-text">
+         
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const startScreen = document.getElementById("startScreen");
+    const loveScreen = document.getElementById("loveScreen");
+
+    const secretBtn = document.getElementById("secretBtn");
+    const secretBox = document.getElementById("secretBox");
+    const kiss = document.getElementById("kiss");
+    const finalText = document.getElementById("finalText");
+
+    const VIDEO_URL = "https://youtu.be/hJ1zvFKrHQA?t=0";
+
+    noBtn.addEventListener("mouseenter", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
+
+    function moveNoButton() {
+      const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+      const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
+      noBtn.style.position = "fixed";
+      noBtn.style.left = x + "px";
+      noBtn.style.top = y + "px";
+    }
+
+    yesBtn.addEventListener("click", () => {
+      startScreen.classList.add("hidden");
+
+      setTimeout(() => {
+        loveScreen.classList.remove("hidden");
+        startFloatingHearts();
+      }, 700);
+    });
+
+    function startFloatingHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("floating-heart");
+        heart.textContent = "❤️";
+
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 25 + 18 + "px";
+        heart.style.animationDuration = Math.random() * 3 + 4 + "s";
+
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 7000);
+      }, 350);
+    }
+
+    secretBtn.addEventListener("click", () => {
+      window.open(VIDEO_URL, "_blank");
+
+      secretBtn.style.display = "none";
+      secretBox.classList.remove("hidden");
+
+      setTimeout(() => {
+        kiss.classList.add("kiss-animation");
+
+        setTimeout(() => {
+          finalText.classList.add("show");
+        }, 1200);
+      }, 1000);
+    });
+  </script>
+
+</body>
+</html>
